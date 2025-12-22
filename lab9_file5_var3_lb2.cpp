@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <sstream>
+
 using namespace std;
 
 template <typename T>
@@ -10,93 +10,145 @@ private:
 
 public:
     Triplet();
-    Triplet(const T& a, const T& b, const T& c);
+    Triplet(const T& first, const T& second, const T& third);
+    Triplet(const Triplet& other);
 
-    T& operator[](int index);
-    const T& operator[](int index) const;
+    void rotate(); // метод сдвига путём отзеркаливание значений
 
-    void rotate();
     string toString() const;
+
+    friend ostream& operator<<(ostream& os, const Triplet& triplet) {    // вывод в поток
+        os << triplet.toString();
+        return os;
+    }
+
+    friend istream& operator>>(istream& is, Triplet& triplet) { // чтение из потока
+        for (int i = 0; i < 3; i++) {
+            is >> triplet.elements[i];
+        }
+        return is;
+    }
+
+    // Очистка содержимого
     void clear();
 
-    friend ostream& operator<<(ostream& out, const Triplet& t);
-    friend istream& operator>>(istream& in, Triplet& t);
+    T getFirst() const;
+    T getSecond() const;
+    T getThird() const;
+
+    void setFirst(const T& value);
+    void setSecond(const T& value);
+    void setThird(const T& value);
 };
 
-template<typename T>
-Triplet<T>::Triplet() : elements{} {}
-
-template<typename T>
-Triplet<T>::Triplet(const T& a, const T& b, const T& c) {
-    elements[0] = a;
-    elements[1] = b;
-    elements[2] = c;
+template <typename T> // конструктор
+Triplet<T>::Triplet() {
+    elements[0] = T();
+    elements[1] = T();
+    elements[2] = T();
 }
 
-template<typename T>
-T& Triplet<T>::operator[](int index) {
-    return elements[index];
+template <typename T>
+Triplet<T>::Triplet(const T& first, const T& second, const T& third) {
+    elements[0] = first;
+    elements[1] = second;
+    elements[2] = third;
 }
 
-template<typename T>
-const T& Triplet<T>::operator[](int index) const {
-    return elements[index];
+template <typename T>
+Triplet<T>::Triplet(const Triplet& other) {
+    for (int i = 0; i < 3; i++) {
+        elements[i] = other.elements[i];
+    }
 }
 
-template<typename T>
+template <typename T> // отзеркаливание значений
 void Triplet<T>::rotate() {
-    T temp = elements[2];
-    elements[2] = elements[1];
-    elements[1] = elements[0];
-    elements[0] = temp;
+    T temp = elements[0];
+    elements[0] = elements[2];
+    elements[2] = temp;
 }
 
-template<typename T>
+template <typename T> // возврат в строку
 string Triplet<T>::toString() const {
-    stringstream ss;
-    ss << "(" << elements[0] << ", " << elements[1] << ", " << elements[2] << ")";
-    return ss.str();
+    return "(" + to_string(elements[0]) + ", " +
+        to_string(elements[1]) + ", " +
+        to_string(elements[2]) + ")";
 }
 
-template<typename T>
+template <> // специализация для строк
+string Triplet<string>::toString() const {
+    return "(" + elements[0] + ", " + elements[1] + ", " + elements[2] + ")";
+}
+
+// Очистка содержимого
+template <typename T>
 void Triplet<T>::clear() {
-    elements[0] = T{};
-    elements[1] = T{};
-    elements[2] = T{};
+    for (int i = 0; i < 3; i++) {
+        elements[i] = T();
+    }
 }
 
-template<typename T>
-ostream& operator<<(ostream& out, const Triplet<T>& t) {
-    out << t.toString();
-    return out;
+//получение элементов
+template <typename T>
+T Triplet<T>::getFirst() const {
+    return elements[0];
 }
 
-template<typename T>
-istream& operator>>(istream& in, Triplet<T>& t) {
-    cout << "Введите три элемента: ";
-    in >> t.elements[0] >> t.elements[1] >> t.elements[2];
-    return in;
+template <typename T>
+T Triplet<T>::getSecond() const {
+    return elements[1];
+}
+
+template <typename T>
+T Triplet<T>::getThird() const {
+    return elements[2];
+}
+
+//установка элементов
+template <typename T>
+void Triplet<T>::setFirst(const T& value) {
+    elements[0] = value;
+}
+
+template <typename T>
+void Triplet<T>::setSecond(const T& value) {
+    elements[1] = value;
+}
+
+template <typename T>
+void Triplet<T>::setThird(const T& value) {
+    elements[2] = value;
 }
 
 int main() {
-    setlocale(LC_ALL, "ru");
+    setlocale(LC_ALL, "RU");
+    Triplet<int> intTriplet(1, 2, 3);
+    cout << "Исходный triplet: " << intTriplet << endl;
+    intTriplet.rotate();
+    cout << "После rotate(): " << intTriplet << endl;
 
-    Triplet<int> t1(1, 2, 3);
-    cout << "Исходный триплет: " << t1 << endl;
+    Triplet<string> stringTriplet("Hi", "how", "you");
+    cout << "\nСтроковый triplet: " << stringTriplet << endl;
+    stringTriplet.rotate();
+    cout << "После rotate(): " << stringTriplet << endl;
 
-    t1.rotate();
-    cout << "После rotate(): " << t1 << endl;
+    Triplet<string> words("Hello", "world", "!");
+    cout << "\nДругой пример: " << words << endl;
+    words.rotate();
+    cout << "После rotate(): " << words << endl;
 
-    t1[1] = 99;
-    cout << "После изменения элемента [1]: " << t1 << endl;
+    Triplet<int> anotherIntTriplet(10, 20, 30);
+    cout << "\nAnother int triplet: " << anotherIntTriplet << endl;
+    anotherIntTriplet.rotate();
+    cout << "После rotate(): " << anotherIntTriplet << endl;
 
-    Triplet<double> t2;
-    cout << "\nВведите значения для триплета double:" << endl;
-    cin >> t2;
-    cout << "Введённый триплет: " << t2 << endl;
+    Triplet<string> inputTriplet;
+    cout << "\nВведите три слова через пробел: ";
+    cin >> inputTriplet;
+    cout << "Введенный triplet: " << inputTriplet << endl;
 
-    t2.clear();
-    cout << "После clear(): " << t2 << endl;
-
+    inputTriplet.rotate();
+    cout << "После rotate(): " << inputTriplet << endl;
     return 0;
 }
