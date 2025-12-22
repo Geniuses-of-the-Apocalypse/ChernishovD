@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cstring>
 using namespace std;
 
 class Array {
@@ -190,4 +189,5 @@ int main() {
 
     return 0;
 }
+
 
