@@ -6,21 +6,6 @@ template<typename T>
 concept Arithmetic = integral<T>;
 
 template <Arithmetic T>
-constexpr auto nod = [](T a, T b) constexpr
-    {
-        if (a < 0) a = -a;
-        if (b < 0) b = -b;
-
-        while (b != 0) {
-            T temp = b;
-            b = a % b;
-            a = temp;
-        }
-
-        return a;
-    };
-
-template <Arithmetic T>
 constexpr auto nok = [](T a, T b) constexpr
     {
         if (a == 0 && b == 0) {
@@ -29,7 +14,6 @@ constexpr auto nok = [](T a, T b) constexpr
 
         if (a < 0) a = -a;
         if (b < 0) b = -b;
-        T gcd = nod<T>(a, b);
 
         if (gcd == 0) {
             return static_cast<T>(0);
@@ -38,18 +22,11 @@ constexpr auto nok = [](T a, T b) constexpr
         if (a / gcd > numeric_limits<T>::max() / b) {
             return static_cast<T>(0);
         }
-
         return (a / gcd) * b;
     };
 
 int main() {
-    setlocale(LC_ALL, "RU");
-
-  
-    constexpr auto result1 = nod<int>(48, 18);   
-    constexpr auto result2 = nod<int>(17, 13);    
-    constexpr auto result3 = nod<int>(-36, 48);    
-    int result4 = nod<int>(35, 15);              
+    setlocale(LC_ALL, "RU");         
 
     constexpr auto lcm1 = nok<int>(48, 18);       
     constexpr auto lcm2 = nok<int>(17, 13);       
@@ -59,12 +36,6 @@ int main() {
     constexpr auto lcm6 = nok<int>(0, 5);       
     constexpr auto lcm7 = nok<int>(0, 0);       
     int lcm8 = nok<int>(21, 6);                  
-
-    cout << "Результаты НОД:" << endl;
-    cout << "НОД(48, 18) = " << result1 << endl;
-    cout << "НОД(17, 13) = " << result2 << endl;
-    cout << "НОД(-36, 48) = " << result3 << endl;
-    cout << "НОД(35, 15) = " << result4 << endl;
 
     cout << "\nРезультаты НОК:" << endl;
     cout << "НОК(48, 18) = " << lcm1 << endl;
@@ -81,4 +52,3 @@ int main() {
 
     return 0;
 }
-
