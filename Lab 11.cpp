@@ -1,7 +1,7 @@
 #include <iostream>
 #include <concepts>
 using namespace std;
-
+// вычисляется на эьате компеляции
 template<typename T>
 concept Arithmetic = integral<T>;
 
@@ -81,3 +81,4 @@ int main() {
 
     return 0;
 }
+
