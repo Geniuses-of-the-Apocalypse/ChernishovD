@@ -2,7 +2,7 @@ package ru.guu_labs;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main() {
         Scanner scanner = new Scanner(System.in);
 
         Vector3D v1 = new Vector3D();
