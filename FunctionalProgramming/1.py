@@ -11,35 +11,28 @@ CSV_DATA = """date,item,quantity,price
 2024-01-07,Orange,4,3.0"""
 
 
-# 1 CSV
 def parse_csv(data: str) -> list[dict]:
-    """Чистая функция: парсит строку CSV в список словарей"""
     return list(csv.DictReader(data.splitlines()))
 
 
-#2 Общая выручка
 def compute_revenue(rows: list[dict]) -> float:
-    """Чистая функция: вычисляет общую выручку"""
-    return sum(int(row["quantity"]) * float(row["price"]) for row in rows)
+    return sum(map(lambda x: int(x["quantity"]) * float(x["price"]), rows))
 
 
-#3 Cтрока с макс выручкой
 def top_item(rows: list[dict]) -> Optional[dict]:
-
     if not rows:
         return None
     try:
-        return max(rows, key=lambda row: int(row["quantity"]) * float(row["price"]))
+        return max(rows, key=lambda x: int(x["quantity"]) * float(x["price"]))
     except (ValueError, TypeError, KeyError):
         return None
-
 
 
 rows = parse_csv(CSV_DATA)
 
 print(f"\n1. Всего записей: {len(rows)}")
-for i, row in enumerate(rows, 1):
-    print(f"   {i}. {row}")
+for i, x in enumerate(rows, 1):
+    print(f"   {i}. {x}")
 
 total_revenue = compute_revenue(rows)
 print(f"\n2. Общая выручка: {total_revenue:.2f}")
@@ -52,6 +45,3 @@ if best:
     print(f"\n3. Товар с максимальной выручкой:")
     print(f"   {best}")
     print(f"   Выручка: {revenue:.2f}")
-else:
-    print("\n3. Нет данных для анализа")
-
