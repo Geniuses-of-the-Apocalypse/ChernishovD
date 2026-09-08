@@ -1,14 +1,57 @@
 import csv
 from typing import Optional
 
-#1
-def parse_csv (data:str) -> list[dict]:
+CSV_DATA = """date,item,quantity,price
+2024-01-01,Apple,10,1.5
+2024-01-02,Banana,5,2.0
+2024-01-03,Orange,3,3.0
+2024-01-04,Apple,2,1.5
+2024-01-05,Grape,1,5.0
+2024-01-06,Banana,7,2.0
+2024-01-07,Orange,4,3.0"""
+
+
+# 1 CSV
+def parse_csv(data: str) -> list[dict]:
+    """Чистая функция: парсит строку CSV в список словарей"""
     return list(csv.DictReader(data.splitlines()))
-#2
-def compute_revenue(rows:list[dict]) -> float:
-    return sum(int(row["quantity"]) * float(row["price"])
-               for row in rows)
-#3
-def top_item(rows: list[dict])-> Optional[dict]:
-    return max(rows, key=lambda row: int(row["quantity"]) * float(row["price"]))
-    default = 0
+
+
+#2 Общая выручка
+def compute_revenue(rows: list[dict]) -> float:
+    """Чистая функция: вычисляет общую выручку"""
+    return sum(int(row["quantity"]) * float(row["price"]) for row in rows)
+
+
+#3 Cтрока с макс выручкой
+def top_item(rows: list[dict]) -> Optional[dict]:
+
+    if not rows:
+        return None
+    try:
+        return max(rows, key=lambda row: int(row["quantity"]) * float(row["price"]))
+    except (ValueError, TypeError, KeyError):
+        return None
+
+
+
+rows = parse_csv(CSV_DATA)
+
+print(f"\n1. Всего записей: {len(rows)}")
+for i, row in enumerate(rows, 1):
+    print(f"   {i}. {row}")
+
+total_revenue = compute_revenue(rows)
+print(f"\n2. Общая выручка: {total_revenue:.2f}")
+
+best = top_item(rows)
+if best:
+    quantity = int(best.get('quantity', 0))
+    price = float(best.get('price', 0))
+    revenue = quantity * price
+    print(f"\n3. Товар с максимальной выручкой:")
+    print(f"   {best}")
+    print(f"   Выручка: {revenue:.2f}")
+else:
+    print("\n3. Нет данных для анализа")
+
