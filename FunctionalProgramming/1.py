@@ -15,34 +15,27 @@ CSV_DATA = """date,item,quantity,price
 def parse_csv(data: str) -> list[dict]:
     return list(csv.DictReader(data.splitlines()))
 
-
 def compute_revenue(rows: list[dict]) -> float:
-    return sum(map(lambda x: int(x["quantity"]) * float(x["price"]), rows))
-
+    return sum(map(lambda x: float(x["quantity"]) * float(x["price"]), rows))
 
 def top_item(rows: list[dict]) -> Optional[dict]:
-    if not rows:
-        return None
-    try:
-        return max(rows, key=lambda x: int(x["quantity"]) * float(x["price"]))
-    except (ValueError, TypeError, KeyError):
-        return None
+    return max(rows, key=lambda x: float(x["quantity"]) * float(x["price"]))
 
 
 rows = parse_csv(CSV_DATA)
 
 print(f"\n1. Всего записей: {len(rows)}")
 for i, x in enumerate(rows, 1):
-    print(f"   {i}. {x}")
+    print(f"{i}. {x}")
 
 total_revenue = compute_revenue(rows)
 print(f"\n2. Общая выручка: {total_revenue:.2f}")
 
 best = top_item(rows)
-if best:
-    quantity = int(best.get('quantity', 0))
-    price = float(best.get('price', 0))
-    revenue = quantity * price
-    print(f"\n3. Товар с максимальной выручкой:")
-    print(f"   {best}")
-    print(f"   Выручка: {revenue:.2f}")
+
+quantity = int(best.get('quantity', 0))
+price = float(best.get('price', 0))
+revenue = quantity * price
+print(f"\n3. Товар с максимальной выручкой:")
+print(f"{best}")
+print(f"Выручка: {revenue:.2f}")
