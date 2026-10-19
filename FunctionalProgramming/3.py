@@ -1,4 +1,5 @@
 #5cc74fb2ffaf4a2ca7d651bbcb2ddeac
+
 from dataclasses import dataclass
 from enum import Enum, auto
 from typing import Generic, TypeVar, Union
