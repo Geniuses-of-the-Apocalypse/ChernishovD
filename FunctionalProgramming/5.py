@@ -12,7 +12,6 @@ print(tuple(map(
     lambda student: f"Имя: {student['name']}, Оценка: {student['grade']}",
     STUDENTS))) 
  
-
 # Уровень 2
 print(tuple(filter(lambda student: student["grade"] > 4.0, STUDENTS))) 
 
