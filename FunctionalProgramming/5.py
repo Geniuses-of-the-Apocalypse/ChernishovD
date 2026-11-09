@@ -1,11 +1,11 @@
 from functools import reduce
 
-STUDENTS = [
+STUDENTS = tuple ((
     {"name": "Анна", "age": 20, "grade": 4.5},
     {"name": "Борис", "age": 22, "grade": 3.8},
     {"name": "Виктор", "age": 19, "grade": 4.2},
     {"name": "Галина", "age": 21, "grade": 4.9},
-    {"name": "Дмитрий", "age": 23, "grade": 3.5},]
+    {"name": "Дмитрий", "age": 23, "grade": 3.5},)) 
 
 # Уровень 1
 FORMATTED_STUDENTS = map(
