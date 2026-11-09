@@ -1,39 +1,23 @@
 from functools import partial
-# Уровень 1
-# Каррированная функция через вложенные lambda:
-filter_by = lambda key: lambda value: lambda items: [
-    item for item in items if item.get(key) == value
-]
 
-items = [
+# Уровень 1
+filter_by = lambda key: lambda value: lambda items: tuple (
+    item for item in items if item.get(key) == value)
+
+ITEMS = (
     {"name": "apple",  "category": "fruit"},
     {"name": "carrot", "category": "vegetable"},
-    {"name": "banana", "category": "fruit"},]
+    {"name": "banana", "category": "fruit"},)
 
-print(filter_by("category")("fruit")(items))
+print(filter_by("category")("fruit")(ITEMS))
 
-# Уровень 2
-filter_by_category = partial(
-    lambda key, value, items: [i for i in items if i.get(key) == value],
-    "category",)
+#  Уровень 2
+FILTER_BY_CTEGORY = partial(filter_by, "category")
 
-# Фиксируем ещё и value="fruit" -> получаем filter_fruits(items)
-filter_fruits = partial(filter_by_category, "fruit")
+# Уровень 3 
+GREATER_THAN = lambda threshold: lambda x: x > threshold
 
-print(filter_fruits(items))
+NUMBERS = (1, 6, 8, 2, 9)
 
-# Уровень 3
-greater_than = lambda threshold: lambda x: x > threshold
-
-# Фиксируем порог через каррирование
-over_five = greater_than(5)
-
-numbers = [1, 6, 8, 2, 9]
-filtered = list(filter(over_five, numbers))
-print(filtered)
-# [6, 8, 9]
-
-# Через partial 
-over_five_p = partial(lambda threshold, x: x > threshold, 5)
-print(list(filter(over_five_p, numbers)))
+print(list(filter(GREATER_THAN(5), NUMBERS)))
 # [6, 8, 9]
