@@ -24,6 +24,5 @@ for student in good_students:
 good_students = filter(lambda student: student["grade"] > 4.0, students)
 
 total_age, count = reduce(
-    lambda acc, student: (acc[0] + student["age"], acc[1] + 1),
-    good_students, (0, 0))
+    lambda acc, student: (acc[0] + student["age"], acc[1] + 1),good_students,(0, 0))
 
