@@ -8,15 +8,13 @@ STUDENTS = tuple ((
     {"name": "Дмитрий", "age": 23, "grade": 3.5},)) 
 
 # Уровень 1
-FORMATTED_STUDENTS = tuple(map(
+print(tuple(map(
     lambda student: f"Имя: {student['name']}, Оценка: {student['grade']}",
-    STUDENTS)) 
-print(FORMATTED_STUDENTS) 
+    STUDENTS))) 
  
 
 # Уровень 2
-GOOD_STUDENTS = tuple(filter(lambda student: student["grade"] > 4.0, STUDENTS)) 
-print(GOOD_STUDENTS) 
+print(tuple(filter(lambda student: student["grade"] > 4.0, STUDENTS))) 
 
 # Уровень 3 
 GOOD_STUDENTS = filter(lambda student: student["grade"] > 4.0, STUDENTS)
