@@ -1,3 +1,4 @@
+#e18ab9b49eb75df297bfe4b90b54eff8eb95673ce326e4ed52644fb167c922d2
 from functools import partial
 
 # Уровень 1
