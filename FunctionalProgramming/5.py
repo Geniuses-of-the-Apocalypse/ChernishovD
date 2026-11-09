@@ -11,12 +11,12 @@ STUDENTS = [
 FORMATTED_STUDENTS = map(
     lambda student: f"Имя: {student['name']}, Оценка: {student['grade']}",
     STUDENTS)
-for line in formatted_students:
+for line in FORMATTED_STUDENTS:
     print(line)
 
 # Уровень 2
 GOOD_STUDENTS = filter(lambda student: student["grade"] > 4.0, STUDENTS)
-for student in good_students:
+for student in GOOD_STUDENTS:
     print(student)
 
 # Уровень 3 
@@ -24,4 +24,3 @@ GOOD_STUDENTS = filter(lambda student: student["grade"] > 4.0, STUDENTS)
 
 total_age, count = reduce(
     lambda acc, student: (acc[0] + student["age"], acc[1] + 1),good_students,(0, 0))
-
