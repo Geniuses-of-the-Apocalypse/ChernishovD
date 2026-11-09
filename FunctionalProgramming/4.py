@@ -10,7 +10,6 @@ items = [
     {"name": "carrot", "category": "vegetable"},
     {"name": "banana", "category": "fruit"},]
 
-# Пример использования
 print(filter_by("category")("fruit")(items))
 
 # Уровень 2
