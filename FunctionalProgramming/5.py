@@ -18,5 +18,5 @@ print(tuple(filter(lambda student: student["grade"] > 4.0, STUDENTS)))
 # Уровень 3 
 GOOD_STUDENTS = filter(lambda student: student["grade"] > 4.0, STUDENTS)
 
-total_age, count = reduce(
+TOTAL_AGE, COUNT = reduce(
     lambda acc, student: (acc[0] + student["age"], acc[1] + 1),GOOD_STUDENTS,(0, 0))
