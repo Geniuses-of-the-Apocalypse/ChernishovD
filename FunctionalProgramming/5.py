@@ -6,6 +6,7 @@ STUDENTS = tuple((
     {"name": "Виктор", "age": 19, "grade": 4.2},
     {"name": "Галина", "age": 21, "grade": 4.9},
     {"name": "Дмитрий", "age": 23, "grade": 3.5}))
+
 #1
 def format_students():
     def format_student(students):
