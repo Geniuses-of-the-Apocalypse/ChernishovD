@@ -9,26 +9,30 @@ STUDENTS = tuple((
 #1
 def format_students():
     def format_student(students):
-        return f"Имя: {student['name']}, Оценка: {student['grade']}"
-    return tuple(map(format_student, students))
+        return map(lambda s: f"Имя: {s['name']}, Оценка: {s['grade']}", students)
+    return format_student
 
 #2
 def filter_by_grade():
-    def is_above_grade(students, min_grade=4.0):
-        return student["grade"] > min_grade
-    return tuple(filter(is_above_grade, students))
+    def is_above_grade(students):
+        return filter(lambda s: s['grade'] > 4.0, students)
+    return run
     
 #3
 def average_age():
-    def accumulate(acc, students):
-        total_age, count = acc
-        return total_age + student["age"], count + 1
-    total_age, count = reduce(accumulate, students, (0, 0))
-    return total_age / count if count else 0
+    def accumulate(students):
+        return reduce(
+            lambda acc, student: (acc[0] + student["age"], acc[1] + 1),
+            filter(lambda s: s['grade'] > 4.0, students),
+            (0, 0),
+        )
+    return accumulate
     
 fs = format_students()
 fbg = filter_by_grade()
 aa = average_age()
-print(fs(STUDENTS))
-print(fbg(STUDENTS))
-print(aa(FILTERED_STUDENTS))
+
+print(tuple(fs(STUDENTS)))
+print(tuple(fbg(STUDENTS)))
+TOTAL_AGE, COUNT = aa(STUDENTS)
+print(TOTAL_AGE / COUNT)
