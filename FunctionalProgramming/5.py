@@ -1,3 +1,4 @@
+#d47c3cee6a1b962ea1ea9cbdfa48a74b689d3e82654d72704aac4fe7f7a85f39
 from functools import reduce
 
 STUDENTS = tuple((
